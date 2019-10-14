@@ -162,6 +162,7 @@ class Item:
     :param rarity: Item rarity.
     :param name: Item name.
     :param base: Item base type.
+    :param item_id: Item ID in Path of Building, used for mapping items to sets.
     :param uid: Unique item ID for items in-game.
 
     .. note:: Items created in Path of Building do not have an UID.
@@ -186,6 +187,7 @@ class Item:
     rarity: str
     name: str
     base: str
+    item_id: int
     uid: str
     shaper: bool
     elder: bool
@@ -226,6 +228,8 @@ class Set:
     """Set(*args)
     Class that holds an item set.
 
+    :param name: Item set name.
+    :param use_second_weapon_set: Whether the items set primarily uses the second weapon set.
     :param weapon1: Primary weapon.
     :param weapon1_as1: Primary weapon abyssal socket 1.
     :param weapon1_as2: Primary weapon abyssal socket 1.
@@ -262,6 +266,8 @@ class Set:
     :param flask4: Flask bound to '4' by default.
     :param flask5: Flask bound to '5' by default."""
 
+    name: str
+    use_second_item_set: bool
     weapon1: Optional[int]
     weapon1_as1: Optional[int]
     weapon1_as2: Optional[int]

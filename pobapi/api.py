@@ -202,6 +202,7 @@ class PathOfBuildingAPI:
             rarity = _get_stat(item, "Rarity: ").capitalize()
             name = item[1]
             base = name if rarity in ("Normal", "Magic") else item[2]
+            item_id = int(text.get("id"))
             uid = _get_stat(item, "Unique ID: ")
             shaper = True if _get_stat(item, "Shaper Item") else False
             elder = True if _get_stat(item, "Elder Item") else False
@@ -219,8 +220,8 @@ class PathOfBuildingAPI:
             implicit = int(_get_stat(item, "Implicits: "))
             item_text = _get_text(item, variant, alt_variant, mod_ranges)
             # fmt: off
-            yield models.Item(rarity, name, base, uid, shaper, elder, crafted, quality, sockets,
-                              level_req, item_level, implicit, item_text)
+            yield models.Item(rarity, name, base, item_id, uid, shaper, elder, crafted,
+                              quality, sockets, level_req, item_level, implicit, item_text)
             # fmt: on
 
     @memoized_property
@@ -246,6 +247,8 @@ class PathOfBuildingAPI:
                 else None
                 for slot in item_set.findall("Slot")
             }
+            kwargs["name"] = item_set.get("title")
+            kwargs["use_second_item_set"] = True if item_set.get("useSecondWeaponSet") == "true" else False
             yield models.Set(**kwargs)
 
     @memoized_property
